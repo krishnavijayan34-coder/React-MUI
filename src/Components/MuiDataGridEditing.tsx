@@ -18,7 +18,14 @@ const columns: GridColDef[] = [
     align: "center",
     headerAlign: "center",
     editable: true, 
+    preProcessEditCellProps: (params) => {
+      const hasError = params.props.value.length < 3;
+
+      return { ...params.props, error: hasError };
+       },
   },
+
+  
 
   {
     field: "age",
@@ -44,7 +51,9 @@ function MuiDataGridEditing() {
   return (
     <Box sx={{height:400, width:'100%'}}>
         <DataGrid rows={rows} columns={columns} 
-         editMode="row"  processRowUpdate={(newRow) => {
+         /*editMode="row" */
+         isCellEditable={(params) => params.row.age > 25} 
+         processRowUpdate={(newRow) => {
           setRows((prevRows) =>
             prevRows.map((row) =>
               row.id === newRow.id ? newRow : row
