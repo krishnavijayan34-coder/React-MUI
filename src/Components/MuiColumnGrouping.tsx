@@ -1,5 +1,6 @@
-import { DataGrid,GridColDef } from "@mui/x-data-grid";
+import { DataGrid,GridColDef,GridColumnVisibilityModel } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
 const rows = [
   { id: 1, firstName: "Jon", lastName: "Snow", age: 14 },
@@ -39,11 +40,16 @@ const columnGroupingModel = [
   },
 ];
 function MuiColumnGrouping() {
+    const [columnVisibilityModel, setColumnVisibilityModel] = useState<GridColumnVisibilityModel>({
+    age: false, });
   return (
     <Box sx={{height:400, width:'100%'}}>
         <DataGrid rows={rows} columns={columns} 
         columnGroupingModel={columnGroupingModel}
-        columnGroupHeaderHeight={40}/>
+        columnGroupHeaderHeight={40}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
+      />
       
     </Box>
   );
